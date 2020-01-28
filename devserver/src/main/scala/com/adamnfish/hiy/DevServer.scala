@@ -35,7 +35,7 @@ object DevServer {
       },
       ctx.result
     )
-    ctx.header("content-type", "application/json")
+    ctx.header("content-type", "application/json; charset=UTF-8")
     ctx.header("Access-Control-Allow-Origin", "*")
   }
 

@@ -1,18 +1,6 @@
 package com.adamnfish.hiy.capi
 
-import java.io.PrintWriter
-
-import com.adamnfish.hiy.models.{CapiContributor, CapiTag}
-import com.adamnfish.hiy.models.Serialisation._
 import com.gu.contentapi.client.GuardianContentClient
-import org.scalatest.concurrent.ScalaFutures
-
-import scala.concurrent.Await
-import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.io.Source
-import io.circe.parser.parse
-import io.circe.syntax._
 import org.scalatest.EitherValues
 
 

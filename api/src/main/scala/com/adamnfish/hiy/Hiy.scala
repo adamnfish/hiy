@@ -22,7 +22,7 @@ object Hiy {
       case SearchPath(rawQuery) =>
         val query = URLDecoder.decode(rawQuery, "UTF-8")
         val fResult = search(query, capiClient)
-        Await.result(fResult, 2.seconds)
+        Await.result(fResult, 5.seconds)
       case _ =>
         error("Not found")
     }
