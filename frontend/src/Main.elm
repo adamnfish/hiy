@@ -1,100 +1,9 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
 import Model exposing (..)
 import View exposing (view)
 import Ports exposing (..)
-
-
----- MODEL ----
-
-
-
-init : ( Model, Cmd Msg )
-init =
-    ( Query "", Cmd.none )
-
-
-
----- UPDATE ----
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case model of
-        Query query ->
-            case msg of
-                TypeQuery newQuery ->
-                    ( Query newQuery, Cmd.none )
-
-                Search ->
-                    ( Searching query, performSearch query )
-
-                SearchResponse (Ok searchResult) ->
-                    ( Result query searchResult, Cmd.none )
-
-                SearchResponse (Err err) ->
-                    ( SearchError query "Error querying", Cmd.none )
-
-                Navigate path ->
-                    ( model, navigate path )
-
-
-        Result query searchResult ->
-            case msg of
-                TypeQuery newQuery ->
-                    ( Result newQuery searchResult, Cmd.none )
-
-                Search ->
-                    ( Searching query, performSearch query )
-
-                SearchResponse (Ok newSearchResult) ->
-                    ( Result query newSearchResult, Cmd.none )
-
-                SearchResponse (Err err) ->
-                    ( SearchError query "Error querying", Cmd.none )
-
-                Navigate path ->
-                     ( model, navigate path )
-
-
-        Searching query ->
-            case msg of
-                TypeQuery newQuery ->
-                    ( Searching newQuery, Cmd.none )
-
-                Search ->
-                    ( Searching query, performSearch query )
-
-                SearchResponse (Ok searchResult) ->
-                    ( Result query searchResult, Cmd.none )
-
-                SearchResponse (Err err) ->
-                    ( SearchError query "Error querying", Cmd.none )
-
-                Navigate path ->
-                    ( model, navigate path )
-
-
-        SearchError query _ ->
-            case msg of
-                TypeQuery newQuery ->
-                    ( Searching newQuery, Cmd.none )
-
-                Search ->
-                    ( Searching query, performSearch query )
-
-                SearchResponse (Ok searchResult) ->
-                    ( Result query searchResult, Cmd.none )
-
-                SearchResponse (Err err) ->
-                    ( SearchError query "Error querying", Cmd.none )
-
-                Navigate path ->
-                    ( model, navigate path )
-
 
 
 
@@ -106,7 +15,89 @@ main : Program () Model Msg
 main =
     Browser.element
         { view = view
-        , init = \_ -> init
+        , init = \_ -> ( Query "", Cmd.none )
         , update = update
         , subscriptions = always Sub.none
         }
+
+
+
+
+---- UPDATE ----
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        TypeQuery newQuery ->
+            case model of
+                Searching _ ->
+                    ( Query newQuery, Cmd.none )
+
+                _ ->
+                    ( Query newQuery, Cmd.none )
+
+
+        SearchResponse (Ok searchResult) ->
+            ( Result (currentQuery model) searchResult NotExpanded, Cmd.none )
+
+        SearchResponse (Err err) ->
+            ( SearchError (currentQuery model) "Error querying", Cmd.none )
+
+
+        Search ->
+            let
+                query = currentQuery model
+            in
+            if String.length query >= 3 then
+                ( Searching query, performSearch query )
+            else
+                ( Query query, Cmd.none )
+
+
+        Navigate path ->
+            ( model, navigate path )
+
+
+        ExpandArticles ->
+            case model of
+                Result query searchResult _ ->
+                    ( Result query searchResult ArticlesExpanded
+                    , Cmd.none
+                    )
+
+                _ ->
+                    ( model, Cmd.none )
+
+
+        ExpandContributors ->
+            case model of
+                Result query searchResult _ ->
+                    ( Result query searchResult ContributorsExpanded
+                    , Cmd.none
+                    )
+
+                _ ->
+                    ( model, Cmd.none )
+
+
+        ExpandSubjects ->
+            case model of
+                Result query searchResult _ ->
+                    ( Result query searchResult SubjectsExpanded
+                    , Cmd.none
+                    )
+
+                _ ->
+                    ( model, Cmd.none )
+
+        Unexpand ->
+            case model of
+                Result query searchResult _ ->
+                    ( Result query searchResult NotExpanded
+                    , Cmd.none
+                    )
+
+                _ ->
+                    ( model, Cmd.none )
+

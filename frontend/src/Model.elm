@@ -15,14 +15,42 @@ root = "http://localhost:7000/"
 type Model
     = Query String
     | Searching String
-    | Result String SearchResult
+    | Result String SearchResult ExpandedResult
     | SearchError String String
+
+
+type ExpandedResult
+    = NotExpanded
+    | ArticlesExpanded
+    | ContributorsExpanded
+    | SubjectsExpanded
+
 
 type Msg
     = TypeQuery String
     | SearchResponse ( Result Http.Error SearchResult )
     | Search
     | Navigate String
+    | ExpandArticles
+    | ExpandContributors
+    | ExpandSubjects
+    | Unexpand
+
+
+currentQuery : Model -> String
+currentQuery model =
+    case model of
+        Query query ->
+            query
+
+        Searching query ->
+            query
+
+        Result query _ _ ->
+            query
+
+        SearchError query _ ->
+            query
 
 
 type alias Subject =
@@ -48,6 +76,7 @@ type alias SearchResult =
     , contributors : List Contributor
     , articles : List Article
     }
+
 
 subjectDecoder : Json.Decode.Decoder Subject
 subjectDecoder =
