@@ -1,0 +1,7 @@
+{
+  "@aws-cdk/core:enableStackNameDuplicates": "true",
+  "hosted-zone:account=118153312565:domainName=adamnfish.io:region=eu-west-1": {
+    "Id": "/hostedzone/Z3N5U17U4PLACK",
+    "Name": "adamnfish.io."
+  }
+}
