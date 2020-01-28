@@ -13,7 +13,7 @@ import scala.util.Properties
 class Lambda {
   def handleRequest(event: APIGatewayProxyRequestEvent, context: Context): APIGatewayProxyResponseEvent = {
     val capiKeyE = Properties.envOrNone("CAPI_KEY")
-      .toRight("NRE auth is token not present in the environment")
+      .toRight("CAPI key is not present in the environment")
 
     val result = for {
       capiKey <- capiKeyE

@@ -19,8 +19,8 @@ export class HiyApp extends cdk.Stack {
 
     const apiTimeout = cdk.Duration.seconds(10);
 
-    const nreToken = ssm.StringParameter
-        .valueForStringParameter(this, '/adamnfish/hiy/nre-token', 1);
+    const capiKey = ssm.StringParameter
+        .valueForStringParameter(this, '/adamnfish/hiy/capi-key', 1);
     const subdomain = ssm.StringParameter
         .valueForStringParameter(this, '/adamnfish/hiy/subdomain', 1);
     const domain = ssm.StringParameter
@@ -37,7 +37,7 @@ export class HiyApp extends cdk.Stack {
       handler: 'com.adamnfish.hiy.Lambda::handleRequest',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../api/target/scala-2.13/hiy-api.jar')),
       environment: {
-        NRE_TOKEN: nreToken
+        CAPI_KEY: capiKey
       }
     });
     const ag = new apigateway.LambdaRestApi(this, "hiy-gateway", {
