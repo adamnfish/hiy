@@ -68,17 +68,26 @@ object Capi {
       }
   }
 
+  def capiContributorToContributor(capiContributor: CapiContributor): Contributor = {
+      Contributor(
+        capiContributor.webTitle,
+        capiContributor.bylineImageUrl,
+        capiContributor.id
+      )
+  }
+
   def contributorSearch(query: String, capiContributors: List[CapiContributor]): List[Contributor] = {
-    capiContributors
+    val maybeFirst =
+      if (query.toLowerCase == "the hero inside yourself") {
+        capiContributors.find(_.id == "profile/adam-fisher").map(capiContributorToContributor)
+      } else {
+        None
+      }
+    val matches = capiContributors
       .filter { capiContributor =>
         capiContributor.webTitle.toLowerCase().contains(query.toLowerCase())
       }
-      .map { capiContributor =>
-        Contributor(
-          capiContributor.webTitle,
-          capiContributor.bylineImageUrl,
-          capiContributor.id
-        )
-      }
+      .map(capiContributorToContributor)
+    (maybeFirst ++ matches).toList
   }
 }

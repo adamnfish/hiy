@@ -8,8 +8,8 @@ import Json.Decode.Pipeline exposing (required)
 
 -- Can be useful to change this while developing to get hot reloading
 root : String
---root = "/"
-root = "http://localhost:7000/"
+root = "/"
+--root = "http://localhost:7000/"
 
 
 type Model

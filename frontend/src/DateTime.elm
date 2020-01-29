@@ -18,5 +18,7 @@ periodToStr ms =
         String.fromInt days ++ "d"
     else if hours > 0 then
         String.fromInt hours ++ "h"
-    else
+    else if minutes > 0 then
         String.fromInt minutes ++ "m"
+    else
+        "now"
