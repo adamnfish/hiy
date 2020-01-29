@@ -1,6 +1,8 @@
 Search
 ======
 
+> Search for the Hero Inside Yourself
+
 Better search for `theguardian.com`.
 
 ## TODO
