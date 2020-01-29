@@ -7,7 +7,7 @@ var app = Elm.Main.init({
 });
 
 app.ports.navigate.subscribe(function(url){
-    console.log("NAVIGATE!", url);
+    document.location = "https://www.theguardian.com/" + url;
 });
 
 
