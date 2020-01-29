@@ -68,6 +68,31 @@ ui model =
                 ]
                 [ searchEl query ]
 
+        YouFoundIt query ->
+            column
+                [ width fill
+                , height fill
+                ]
+                [ searchEl query
+                , el
+                    [ width fill
+                    , padding 50
+                    ]
+                    <| image
+                        [ centerY
+                        , centerX
+                        ]
+                        { src = "%PUBLIC_URL%/images/key.png"
+                        , description = "The key to your life"
+                        }
+                , el
+                    [ width fill
+                    , Font.center
+                    ]
+                    <| text "To your life"
+                ]
+
+
 
 searchEl : String -> Element Msg
 searchEl query =

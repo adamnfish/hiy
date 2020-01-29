@@ -17,6 +17,7 @@ type Model
     | Searching String
     | Result String SearchResult ExpandedResult
     | SearchError String String
+    | YouFoundIt String
 
 
 type ExpandedResult
@@ -50,6 +51,9 @@ currentQuery model =
             query
 
         SearchError query _ ->
+            query
+
+        YouFoundIt query ->
             query
 
 
