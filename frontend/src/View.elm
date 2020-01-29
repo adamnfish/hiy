@@ -26,8 +26,21 @@ ui model =
         Query query ->
             column
                 [ width fill
+                , height fill
                 ]
-                [ searchEl query ]
+                [ searchEl query
+                , el
+                    [ width fill
+                    , height fill
+                    ]
+                    <| image
+                        [ centerY
+                        , centerX
+                        ]
+                        { src = "%PUBLIC_URL%/images/logo.png"
+                        , description = "Guardian search logo"
+                        }
+                ]
 
         Searching query ->
             column
