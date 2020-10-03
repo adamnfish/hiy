@@ -5,6 +5,8 @@ Search
 
 Better search for `theguardian.com`.
 
+![HIY logo](/frontend/public/images/logo.png)
+
 ## TODO
 
 * Clear search input button
