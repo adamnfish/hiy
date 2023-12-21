@@ -1,3 +1,6 @@
+> [!WARNING]  
+> This was a hack-day project and has been archived
+
 Search
 ======
 
